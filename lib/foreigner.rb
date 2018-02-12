@@ -1,5 +1,10 @@
 require "foreigner/version"
+require "foreigner/config"
+require "foreigner/error"
+require "foreigner/sources/ecb"
 
 module Foreigner
-  # Your code goes here...
+  def self.configure
+    yield(Config)
+  end
 end

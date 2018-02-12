@@ -24,4 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.7.0"
   spec.add_development_dependency "pry", "~> 0.11.3"
   spec.add_development_dependency "pry-doc", "~> 0.12.0"
+  spec.add_development_dependency "webmock", "~> 3.3.0"
+  spec.add_dependency "nokogiri", "~> 1.8.2"
+  spec.add_dependency "rest-client", "~> 2.0.2"
 end
