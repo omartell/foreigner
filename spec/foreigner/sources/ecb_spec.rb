@@ -3,10 +3,6 @@ require "spec_helper"
 RSpec.describe Foreigner::Sources::ECB do
   let(:ecb) { described_class.new }
 
-  def ecb_fixture_xml
-    File.read(File.expand_path("../../../fixtures/ecb.xml", __FILE__))
-  end
-
   def empty_fixture_xml
     File.read(File.expand_path("../../../fixtures/empty.xml", __FILE__))
   end
@@ -17,8 +13,6 @@ RSpec.describe Foreigner::Sources::ECB do
 
   describe "#fetch_rates" do
     it "outputs the ECB rates into a JSON file with the dates as keys and the rates for that date as values" do
-      stub_request(:get, /www.ecb.europa.eu/).to_return(body: ecb_fixture_xml)
-
       ecb.fetch_rates
 
       expect(rates_json_file).to match(hash_including(

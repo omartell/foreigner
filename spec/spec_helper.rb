@@ -2,7 +2,6 @@ require "bundler/setup"
 require "foreigner"
 require "webmock/rspec"
 
-
 Foreigner.configure do |config|
   config.rates_store = "/tmp/rates.json"
 end
@@ -12,9 +11,13 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
 
   config.around(:each) do |example|
-    File.delete(Foreigner::Config.rates_store) if File.exist?(Foreigner::Config.rates_store)
+    ecb_fixture_xml = File.read(File.expand_path("../fixtures/ecb.xml", __FILE__))
+
+    stub_request(:get, /www.ecb.europa.eu/).to_return(body: ecb_fixture_xml)
 
     example.run
+
+    File.delete(Foreigner::Config.rates_store) if File.exist?(Foreigner::Config.rates_store)
   end
 
   config.expect_with :rspec do |c|
