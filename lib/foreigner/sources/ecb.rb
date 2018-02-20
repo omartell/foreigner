@@ -18,7 +18,7 @@ module Foreigner
 
         date_rates_kv = build_date_rates_kv(document)
 
-        fail Foreigner::Error::RatesNotAvailableError if date_rates_kv.empty?
+        fail Error::RatesNotAvailableError if date_rates_kv.empty?
 
         write_json_file(date_rates_kv)
       end

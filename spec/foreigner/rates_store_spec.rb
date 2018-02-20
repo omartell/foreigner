@@ -6,6 +6,16 @@ RSpec.describe Foreigner::RatesStore do
     ecb.fetch_rates
   end
 
+  describe ".initialize_rates" do
+    it "raises an error if the json file with the rates is missing" do
+      File.delete(Foreigner::Config.rates_store)
+
+      expect {
+        described_class.initialize_rates!
+      }.to raise_error(Foreigner::Error::RatesFileMissingError)
+    end
+  end
+
   describe ".rate_for" do
     context "when there are no rates for the given date" do
       it "returns nil" do

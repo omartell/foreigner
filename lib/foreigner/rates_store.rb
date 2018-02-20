@@ -11,10 +11,14 @@ module Foreigner
         BigDecimal(rate_string) if rate_string
       end
 
-      private
+      def initialize_rates!
+        fail Error::RatesFileMissingError unless File.exist?(Foreigner::Config.rates_store)
+
+        JSON.parse(File.read(Foreigner::Config.rates_store))
+      end
 
       def rates
-        @rates ||= JSON.parse(File.read(Foreigner::Config.rates_store))
+        @rates ||= initialize_rates!
       end
     end
   end
