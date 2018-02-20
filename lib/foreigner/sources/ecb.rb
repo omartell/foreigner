@@ -7,6 +7,7 @@ module Foreigner
   module Sources
     class ECB
       attr_reader :url
+      BASE_CURRENCY = "EUR"
 
       def initialize(url: nil)
         @url = url || Config.sources.fetch(:ecb)
@@ -41,7 +42,9 @@ module Foreigner
       end
 
       def write_json_file(rates)
-        File.write(Config.rates_store, JSON.generate(rates))
+        File.write(Config.rates_store, JSON.generate(
+          rates.merge(base_currency: BASE_CURRENCY))
+        )
       end
     end
   end
